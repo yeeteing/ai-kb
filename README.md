@@ -34,16 +34,20 @@ pip install -r requirements.txt
 ```
 
 ### 2. Run PostgreSQL (Docker)
+```
 docker run --name pg16 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres \
   -e POSTGRES_DB=ai_kb -p 5432:5432 -d postgres:16
+```
 
 ### 3. Configure environment
-```
-Create a .env file:
 
+Create a .env file:
+In your terminal, root of ai-kb project, run: `nano .env`
+```
 DATABASE_URL=postgresql+psycopg2://postgres:postgres@localhost:5432/ai_kb
 LLM_PROVIDER=openai
-OPENAI_API_KEY=   # leave empty for demo mode
+# leave empty for demo mode
+OPENAI_API_KEY=
 TOP_K=4
 SCORE_THRESHOLD=0.15
 ```
@@ -51,7 +55,7 @@ SCORE_THRESHOLD=0.15
 ### 4. Run API
 ``` uvicorn app.main:app --reload ```
 
-Docs available at 👉 http://127.0.0.1:8000/docs
+Docs available at 👉 `http://127.0.0.1:8000/docs`
 
 ## 🧪 Demo
 Add FAQs
@@ -83,6 +87,8 @@ Sample response
   "latency_ms": {"retrieve": 2, "llm": 0, "total": 2}
 }
 ```
+![ai-kb](ai-kb-demo.gif)
+
 ## ✅ Health Check
 curl http://127.0.0.1:8000/health
 #### {"status":"ok"}
