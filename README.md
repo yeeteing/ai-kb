@@ -117,3 +117,8 @@ pytest -q
 - POST /ask — retrieve relevant FAQs (Postgres full-text search) + answer via LLM (or demo text)
 
 - GET /health — health check
+
+---
+
+## 📝 TODO
+See [TODO.md](TODO.md) for a simple checklist to get started locally and plan production setup.
