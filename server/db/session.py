@@ -43,3 +43,21 @@ def ping() -> bool:
             close_connection_safe(c)
     except Exception:
         return False
+
+def create_faq_tables():
+    create_faq_sql = """
+    CREATE TABLE IF NOT EXISTS posts (
+        id SERIAL PRIMARY KEY,
+        org_id TEXT NOT NULL,
+        question TEXT NOT NULL,
+        answer TEXT,
+        answer_search TSVECTOR GENERATED ALWAYS AS (to_tsvector('english', answer)) STORED
+    );
+    """
+
+    try: 
+        c = get_connection()
+        c.cursor().execute(create_faq_sql)
+        c.commit()
+    finally:
+        close_connection_safe(c)

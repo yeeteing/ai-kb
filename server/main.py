@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
 import psycopg2
-from db.session import ping
+from db.session import ping, create_faq_tables
 
 environment = os.environ.get('APP_ENV', 'development')
 
@@ -25,7 +25,20 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.on_event("startup")
+def on_startup():
+    print("Creating FAQ tables if not exist...")
+    create_faq_tables()
+    print("FAQ tables are ready.")
+    
 # Simple health endpoint for quick checks / readiness probes
 @app.get("/health")
 def health():
+    return {"ok": True, "db": ping()}
+
+
+# Simple faqs endpoint for quick checks / readiness probes
+@app.get("/faq")
+def faqTable():
     return {"ok": True, "db": ping()}

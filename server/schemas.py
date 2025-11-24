@@ -1,5 +1,4 @@
-# Pydantic models define what our API expects and returns.
-# They validate incoming JSON and help document the API.
+# defines the request/response contract for FastAPI endpoints
 
 from pydantic import BaseModel
 
